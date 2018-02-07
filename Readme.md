@@ -73,8 +73,6 @@ Start a server from `example` folder and go to home page.
 
 ## FAQ
 
-##### How do I ask a user for additional permissions?
-
 ## Contributing
 
 #### Tests
