@@ -1,0 +1,49 @@
+{
+  "name": "passport-telegram-official",
+  "version": "1.0.0",
+  "description": "Telegram authentication strategy for Passport (https://core.telegram.org/widgets/login)",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "tsc",
+    "test": "jest"
+  },
+  "keywords": [
+    "passport",
+    "telegram",
+    "auth",
+    "login",
+    "oauth"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blitss/passport-telegram-official.git"
+  },
+  "author": "Andrey Vasilev",
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/Blitss/passport-telegram-official/issues"
+  },
+  "release": {
+    "branch": "master"
+  },
+  "homepage": "https://github.com/Blitss/passport-telegram-official#readme",
+  "dependencies": {
+    "lodash": "^4.17.5",
+    "passport-strategy": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.101",
+    "@types/passport-strategy": "^0.2.32",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "passport": "^0.4.0",
+    "typescript": "^2.7.1"
+  }
+}
