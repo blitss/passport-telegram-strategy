@@ -4,7 +4,7 @@ const passport = require('passport');
 
 const TelegramStrategy = require('..');
 
-const throwError = () => { throw new TypeError('Please provide your bot_token through BOT_TOKEN and BOT_NAME envivroment variable') };
+const throwError = () => { throw new TypeError('Please provide your credentials through BOT_TOKEN and BOT_NAME envivroment variable. Also set PORT to 80, because widget won\'t work otherwise.') };
 
 const botToken = process.env.BOT_TOKEN || throwError();
 const botName = process.env.BOT_NAME || throwError();

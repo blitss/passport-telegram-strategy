@@ -2,6 +2,7 @@ dist
 
 # Mac OS X
 .DS_Store
+.idea
 
 # Node.js
 node_modules

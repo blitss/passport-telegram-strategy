@@ -69,7 +69,7 @@ Generate widget [here](https://core.telegram.org/widgets/login) and paste code o
 
 ## Examples
 
-Start a server from `example` folder and go to home page.
+Start a server from `example` folder and go to home page. Note it won't work on `localhost`.
 
 ## FAQ
 

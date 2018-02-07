@@ -1,6 +1,6 @@
 {
   "name": "passport-telegram-official",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Telegram authentication strategy for Passport (https://core.telegram.org/widgets/login)",
   "main": "dist/index.js",
   "scripts": {
