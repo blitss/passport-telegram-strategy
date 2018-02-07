@@ -10,7 +10,7 @@
 using their Widget.
 
 This module lets you authenticate using Telegram in your Node.js applications.
-By plugging into Passport, Facebook authentication can be easily and
+By plugging into Passport, Telegram authentication can be easily and
 unobtrusively integrated into any application or framework that supports
 [Connect](http://www.senchalabs.org/connect/)-style middleware, including
 [Express](http://expressjs.com/).
@@ -31,7 +31,7 @@ Before using `passport-telegram-official`, you must register your bot and get a 
 
 #### Configure Strategy
 
-The Facebook authentication strategy authenticates users using a Telegram
+The Telegram authentication strategy authenticates users using a Telegram
 account and Telegram own OAuth. That is simply. Just specify `botToken` and `verify` callback to complete authentication.
 
 ```js
