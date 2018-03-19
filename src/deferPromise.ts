@@ -8,7 +8,7 @@ export default function deferPromise() {
 
   return {
     then: f => promise.then(f),
-    callback: (err, ...data) => err ? resolve([data]) : reject(err),
+    callback: (err, ...data) => err ? reject(err) : resolve(data),
     promise
   };
 }
