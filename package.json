@@ -1,11 +1,15 @@
 {
   "name": "passport-telegram-official",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Telegram authentication strategy for Passport (https://core.telegram.org/widgets/login)",
   "main": "dist/index.js",
+  "umd:main": "dist/index.umd.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+
   "scripts": {
-    "build": "tsc",
-    "prepublish": "tsc",
+    "build": "microbundle --target node --external crypto,lodash",
+    "prepublish": "npm run build",
     "test": "jest"
   },
   "keywords": [
@@ -35,15 +39,16 @@
   },
   "homepage": "https://github.com/Blitss/passport-telegram-official#readme",
   "dependencies": {
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.11",
     "passport-strategy": "^1.0.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.101",
-    "@types/passport-strategy": "^0.2.32",
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
+    "@types/lodash": "^4.14.130",
+    "@types/passport-strategy": "^0.2.35",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.0",
+    "microbundle": "^0.11.0",
     "passport": "^0.4.0",
-    "typescript": "^2.7.1"
+    "typescript": "^3.4.5"
   }
 }
