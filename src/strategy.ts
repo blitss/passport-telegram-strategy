@@ -35,6 +35,14 @@ export const defaultOptions = {
   passReqToCallback: false,
 };
 
+export const whitelistParams = [
+  'id',
+  'first_name',
+  'username',
+  'photo_url',
+  'auth_date'
+];
+
 /**
  * `TelegramStrategy` constructor.
  *
@@ -138,8 +146,8 @@ export default class TelegramStrategy extends Strategy {
     }
 
     const sorted = Object.keys(query).sort();
-    const mapped = sorted // Everything except hash must be mapped
-     .filter(d => d !== 'hash')
+    const mapped = sorted // Only whitelisted must be mapped
+     .filter(d => whitelistParams.includes(d))
      .map(key => `${key}=${query[key]}`);
 
     const hashString = mapped.join('\n');
