@@ -10,7 +10,9 @@ export type TelegramOptions = {
   // Max seconds expiration. Default is 86400
   queryExpiration?: number;
   // Should pass express req as first argument if true
-  passReqToCallback?: boolean
+  passReqToCallback?: boolean;
+  // Which parameters should be excluded from the query
+  blacklistParams: string[];
 }
 
 // Typical query received to redirectUrl
@@ -33,6 +35,7 @@ export type VerifyCallback = CallbackWithRequest | CallbackWithoutRequest;
 export const defaultOptions = {
   queryExpiration: 86400,
   passReqToCallback: false,
+  blacklistParams: []
 };
 
 /**
@@ -61,6 +64,7 @@ export default class TelegramStrategy extends Strategy {
   options: TelegramOptions;
   verify;
   hashedBotToken: Buffer;
+  blacklistParams: string[];
 
   constructor(options: TelegramOptions, verify: VerifyCallback) {
     super();
@@ -75,6 +79,10 @@ export default class TelegramStrategy extends Strategy {
     this.options = assign({}, defaultOptions, options);
     this.name = 'telegram';
     this.verify = verify;
+    this.blacklistParams = [
+      ...this.options.blacklistParams,
+      'hash'
+    ];
     this.hashedBotToken = this.botToken();
   }
 
@@ -138,8 +146,8 @@ export default class TelegramStrategy extends Strategy {
     }
 
     const sorted = Object.keys(query).sort();
-    const mapped = sorted // Everything except hash must be mapped
-     .filter(d => d !== 'hash')
+    const mapped = sorted // Everything except blacklist must be mapped
+     .filter(d => !this.blacklistParams.includes(d))
      .map(key => `${key}=${query[key]}`);
 
     const hashString = mapped.join('\n');
