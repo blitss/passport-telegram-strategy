@@ -38,6 +38,7 @@ export const defaultOptions = {
 export const whitelistParams = [
   'id',
   'first_name',
+  'last_name',
   'username',
   'photo_url',
   'auth_date'
