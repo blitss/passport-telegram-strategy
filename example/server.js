@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 
-const TelegramStrategy = require('..');
+const TelegramStrategy = require('..').TelegramStrategy;
 
 const throwError = () => { throw new TypeError('Please provide your credentials through BOT_TOKEN and BOT_NAME envivroment variable. Also set PORT to 80, because widget won\'t work otherwise.') };
 
