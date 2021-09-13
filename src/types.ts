@@ -24,7 +24,7 @@ export interface TelegramUser {
 // With intent to make this backwards compatible we clone the original data format
 export type PassportTelegramUser = TelegramUser & {
   provider: 'telegram'
-  id: number
+  id: string
   displayName: string
   name: {
     // last name
