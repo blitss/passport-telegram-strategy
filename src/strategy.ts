@@ -1,34 +1,10 @@
-import { Strategy } from 'passport-strategy';
-import { assign } from 'lodash';
-import * as express from 'express';
-import * as crypto from 'crypto';
-import deferPromise from './deferPromise';
+import * as crypto                         from 'crypto'
+import { Request }                         from 'express'
+import { Strategy }                        from 'passport-strategy'
 
-export type TelegramOptions = {
-  // An unique token which you can get from @BotFather
-  botToken: string;
-  // Max seconds expiration. Default is 86400
-  queryExpiration?: number;
-  // Should pass express req as first argument if true
-  passReqToCallback?: boolean
-}
-
-// Typical query received to redirectUrl
-export type TelegramUser = {
-  auth_date: number;
-  first_name: string;
-  hash: string
-  id: number;
-  last_name: string;
-  username: string;
-}
-
-export type DoneCallback = (err: any, user: any, info: any) => void;
-
-export type CallbackWithRequest = (req: express.Request, user: TelegramUser, done: DoneCallback) => void;
-export type CallbackWithoutRequest = (user: TelegramUser, done: DoneCallback) => void;
-
-export type VerifyCallback = CallbackWithRequest | CallbackWithoutRequest;
+import deferPromise                        from './deferPromise'
+import { normalizeProfile }                from './normalizeProfile'
+import { TelegramOptions, VerifyCallback } from './types'
 
 export const defaultOptions = {
   queryExpiration: 86400,
@@ -94,13 +70,20 @@ export default class TelegramStrategy extends Strategy {
       const validationResult = this.validateQuery(req);
       if (validationResult !== true) return validationResult;
 
-      const promise = deferPromise();
+      const profile = normalizeProfile(query)
+      const promise = deferPromise()
 
       if (this.options.passReqToCallback) {
-        this.verify(req, query, promise.callback);
+        this.verify(req, profile, promise.callback)
       } else {
-        this.verify(query, promise.callback);
+        this.verify(profile, promise.callback)
       }
+
+      promise
+        .then(([user, info]) => {
+          if (!user) {
+            return this.fail(info)
+          }
 
       promise.then(([user, info]) => {
         if (!user) return this.fail(info);
