@@ -1,4 +1,4 @@
-import TelegramStrategy from './strategy';
+import TelegramStrategy from './strategy'
 
-export { TelegramStrategy };
-export default TelegramStrategy;
+export { TelegramStrategy }
+export default TelegramStrategy
