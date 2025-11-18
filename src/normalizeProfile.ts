@@ -1,4 +1,4 @@
-import { PassportTelegramUser, TelegramUser } from './types'
+import type { PassportTelegramUser, TelegramUser } from './types'
 
 export function normalizeProfile(profile: TelegramUser): PassportTelegramUser {
   const normalizedProfile: PassportTelegramUser = {

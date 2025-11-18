@@ -1,18 +1,16 @@
 {
   "compilerOptions": {
+    "target": "es2020",
     "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "strict": false,
     "noImplicitAny": false,
-    "removeComments": false,
-    "declaration": true,
-    "preserveConstEnums": true,
-    "outDir": "./dist",
-    "sourceMap": true
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ]
+    "noUnusedLocals": true,
+    "noEmit": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  }
 }

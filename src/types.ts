@@ -1,4 +1,4 @@
-import { Request } from 'express'
+import type { Request } from 'express'
 
 export interface TelegramOptions {
   // An unique token which you can get from @BotFather
@@ -42,7 +42,7 @@ export type DoneCallback = (err: any, user: any, info: any) => void
 export type CallbackWithRequest = (
   req: Request,
   user: PassportTelegramUser,
-  done: DoneCallback
+  done: DoneCallback,
 ) => void
 export type CallbackWithoutRequest = (user: PassportTelegramUser, done: DoneCallback) => void
 

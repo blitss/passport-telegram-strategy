@@ -1,10 +1,10 @@
-import * as crypto                         from 'crypto'
-import { Request }                         from 'express'
-import { Strategy }                        from 'passport-strategy'
+import type { Request } from 'express'
+import type { TelegramOptions, VerifyCallback } from './types'
+import { createHash, createHmac } from 'node:crypto'
 
-import deferPromise                        from './deferPromise'
-import { normalizeProfile }                from './normalizeProfile'
-import { TelegramOptions, VerifyCallback } from './types'
+import { Strategy } from 'passport-strategy'
+import deferPromise from './deferPromise'
+import { normalizeProfile } from './normalizeProfile'
 
 export const defaultOptions = {
   queryExpiration: 86400,
@@ -32,7 +32,7 @@ export const whitelistParams = [
  *
  * More info here: https://core.telegram.org/widgets/login
  *
- * @param {Object} options
+ * @param {object} options
  * @param {Function} verify
  * @example
  * passport.use(new TelegramStrategy({
@@ -48,7 +48,7 @@ export default class TelegramStrategy extends Strategy {
 
   protected readonly verify
 
-  protected readonly hashedBotToken: Buffer
+  protected readonly hashedBotToken: Uint8Array
 
   constructor(options: TelegramOptions, verify: VerifyCallback) {
     super()
@@ -69,8 +69,7 @@ export default class TelegramStrategy extends Strategy {
     this.hashedBotToken = this.getBotToken()
   }
 
-  // eslint-disable-next-line consistent-return
-  authenticate(req: Request, options?: any) {
+  authenticate(req: Request) {
     const query = req.method === 'GET' ? req.query : req.body
 
     try {
@@ -84,7 +83,8 @@ export default class TelegramStrategy extends Strategy {
 
       if (this.options.passReqToCallback) {
         this.verify(req, profile, promise.callback)
-      } else {
+      }
+      else {
         this.verify(profile, promise.callback)
       }
 
@@ -96,31 +96,30 @@ export default class TelegramStrategy extends Strategy {
 
           return this.success(user, info)
         })
-        .catch(err => {
+        .catch((err) => {
           return this.error(err)
         })
-    } catch (e) {
+    }
+    catch (e) {
       return this.error(e)
     }
   }
 
   /**
    * Function to check if provided date in callback is outdated
-   * @returns {number}
    */
   protected getTimestamp(): number {
     return Math.floor(Date.now() / 1000)
   }
 
   // We have to hash botToken too
-  protected getBotToken(): Buffer {
-    return crypto.createHash('sha256').update(this.options.botToken).digest()
+  protected getBotToken(): Uint8Array {
+    return new Uint8Array(createHash('sha256').update(this.options.botToken).digest())
   }
 
   /**
    * Used to validate if fields like telegram must send are exists
    * @param {e.Request} req
-   * @returns {any}
    */
   validateQuery(req: Request): boolean | void {
     const query = req.method === 'GET' ? req.query : req.body
@@ -131,8 +130,8 @@ export default class TelegramStrategy extends Strategy {
 
     const authDate = Math.floor(Number(query.auth_date))
     if (
-      this.options.queryExpiration !== -1 &&
-      (Number.isNaN(authDate) || this.getTimestamp() - authDate > this.options.queryExpiration)
+      this.options.queryExpiration !== -1
+      && (Number.isNaN(authDate) || this.getTimestamp() - authDate > this.options.queryExpiration)
     ) {
       return this.fail({ message: 'Data is outdated' }, 400)
     }
@@ -143,7 +142,7 @@ export default class TelegramStrategy extends Strategy {
       .map(key => `${key}=${query[key]}`)
 
     const hashString = mapped.join('\n')
-    const hash = crypto.createHmac('sha256', this.hashedBotToken).update(hashString).digest('hex')
+    const hash = createHmac('sha256', this.hashedBotToken).update(hashString).digest('hex')
 
     if (hash !== query.hash) {
       return this.fail({ message: 'Hash validation failed' }, 403)
